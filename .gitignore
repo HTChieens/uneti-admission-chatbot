@@ -47,29 +47,3 @@ faiss_index/
 # =========================
 vectorstore_cache/
 
-# =========================
-# Uploaded Files
-# =========================
-uploads/
-data/raw/
-
-# =========================
-# Models
-# =========================
-models/
-*.gguf
-*.bin
-*.safetensors
-
-# =========================
-# Build Files
-# =========================
-dist/
-build/
-*.egg-info/
-
-# =========================
-# OS Files
-# =========================
-.DS_Store
-Thumbs.db
