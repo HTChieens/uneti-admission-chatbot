@@ -5,3 +5,4 @@ def retrieve(vectorstore, query: str):
     )
     docs = retriever.invoke(query)
     return list(docs)
+    
