@@ -1,4 +1,8 @@
 from langchain_text_splitters import RecursiveCharacterTextSplitter
+
+from .config import CHUNK_OVERLAP, CHUNK_SIZE
+
+
 REGULATION_SEPARATORS = [
     r"\n(?=[IVX]+\.\s+[A-ZÀ-Ỹ])",          # Mức 1: I. THÔNG TIN CHUNG, II. TUYỂN SINH...
     r"\n(?=\d+\.\s+[A-ZÀ-Ỹa-zà-ỹ])",       # Mức 2: 1. Đối tượng..., 2. Mô tả...
@@ -12,14 +16,14 @@ REGULATION_SEPARATORS = [
 ]
 
 splitter = RecursiveCharacterTextSplitter(
-    chunk_size=1200,      
-    chunk_overlap=200,     
+    chunk_size=CHUNK_SIZE,
+    chunk_overlap=CHUNK_OVERLAP,
     add_start_index=True,
     strip_whitespace=True,
     separators=REGULATION_SEPARATORS,
-    is_separator_regex= True
+    is_separator_regex=True
 )
+
 
 def split(docs):
     return splitter.split_documents(docs)
-

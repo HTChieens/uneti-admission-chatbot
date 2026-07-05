@@ -1,13 +1,8 @@
-from src.vectorstore import load_vectorstore
-from src.pipeline import ask
-from pprint import pprint
-
-db = load_vectorstore()
-# while True:
-#     ques = input("Nhập câu hỏi: ")
-#     response = ask(ques, db)
-#     print(response)
 import streamlit as st
+
+from src.pipeline import ask
+from src.vectorstore import load_vectorstore
+
 
 # =========================
 # CẤU HÌNH TRANG
@@ -19,7 +14,7 @@ st.set_page_config(
 )
 
 # =========================
-# CSS TỐI GIẢN KIỂU CHATGPT
+# CSS TỐI GIẢN
 # =========================
 st.markdown("""
 <style>
@@ -39,6 +34,11 @@ st.markdown("""
     }
 </style>
 """, unsafe_allow_html=True)
+
+
+@st.cache_resource(show_spinner="Đang tải dữ liệu tuyển sinh...")
+def get_vectorstore():
+    return load_vectorstore()
 
 # =========================
 # TIÊU ĐỀ
@@ -67,7 +67,6 @@ prompt = st.chat_input("Nhập câu hỏi tuyển sinh...")
 # XỬ LÝ CHAT
 # =========================
 if prompt:
-
     # Hiển thị user message
     st.session_state.messages.append({
         "role": "user",
@@ -77,15 +76,7 @@ if prompt:
     with st.chat_message("user"):
         st.markdown(prompt)
 
-    # =========================
-    # GỌI CHATBOT CỦA BẠN
-    # =========================
-
-    # Ví dụ:
-    # response = ask_rag(prompt)
-
-    # Tạm thời demo
-    response = ask(prompt,db)
+    response = ask(prompt, get_vectorstore())
 
     # =========================
     # HIỂN THỊ RESPONSE
